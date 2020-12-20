@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -18,26 +17,26 @@ public class LogisticsSystem {
     }
 
 
-    public void addSpaceship(String name, String model, Location location, String status) {
-        Spaceship ss = new Spaceship(spaceship_id, name, model, location, status);
-    	
+    public void addSpaceship(String name, String model, Location location, String status) {    	
     	for (Spaceship s : spaceships) {
-    		if (s.equals(ss))
+    		if (s.getName().equals(name) && s.getModel().equals(model)) { 
     			return;
+			}
         }
-        
-    	spaceships.add(ss);
+
+        Spaceship ss = new Spaceship(spaceship_id++, name, model, location, status);        
+        spaceships.add(ss);
     }
 
 
     public void addLocation(String city, String planet, int spaceportCapacity) {
-        Location loc = new Location(locations_id, city, planet, spaceportCapacity);
-    	
-    	for (Location l : locations) {
-    		if (l.equals(loc))
+        for (Location l : locations) {
+    		if (l.getCity().equals(city) && l.getPlanet().equals(planet)) { 
     			return;
+			}
         }
-        
+
+        Location loc = new Location(locations_id++, city, planet, spaceportCapacity);
     	locations.add(loc);
     }
 
@@ -95,6 +94,21 @@ public class LogisticsSystem {
         return ss;
     }
 
+    
+    public Spaceship getSpaceshipByNameAndModel(String name, String model) {
+        Spaceship ss = null;
+
+        Iterator<Spaceship> itr = spaceships.iterator();
+        while (itr.hasNext()) {
+            ss = itr.next();
+            if (ss.getName().equals(name) && ss.getModel().equals(model)) {
+                break;
+            }
+        }
+        return ss;
+    }
+
+
     private Location getLocationByIdentifier(int id) {
         Location loc = null;
 
@@ -102,6 +116,20 @@ public class LogisticsSystem {
         while (itr.hasNext()) {
             loc = itr.next();
             if (loc.getIdentifier() == id) {
+                break;
+            }
+        }
+        return loc;
+    }
+
+
+    public Location getLocationByCityAndPlanet(String city, String planet) {
+        Location loc = null;
+
+        Iterator<Location> itr = locations.iterator();
+        while (itr.hasNext()) {
+            loc = itr.next();
+            if (loc.getCity().equals(city) && loc.getPlanet().equals(planet)) {
                 break;
             }
         }

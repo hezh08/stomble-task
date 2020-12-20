@@ -22,6 +22,18 @@ public class Location {
         return id;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public String getPlanet() {
+        return planet;
+    }
+
+    public int getSpaceportCapacity() {
+        return spaceportCapacity;
+    }
+
     public boolean addVisitor(Spaceship spaceship) {
         if (visitors.size() + 1 > spaceportCapacity) return false;
 
@@ -38,15 +50,11 @@ public class Location {
         }
     }
 
-    public int getSpaceportCapacity() {
-        return spaceportCapacity;
-    }
-
 
 
     @Override
     public String toString() {
-        return city + "-" + planet;
+        return "Id: " + id + " City: " + city + " Planet: " + planet + " Spaceport Capacity: " + spaceportCapacity;
     }
 
     @Override

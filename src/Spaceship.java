@@ -18,6 +18,14 @@ public class Spaceship {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -38,7 +46,7 @@ public class Spaceship {
     
     @Override
     public String toString() {
-        return name + "-" + model;
+        return "Id: " + id + " Name: " + name + " Model: " + model + " Location: " + location + " Status: " + status;
     }
 
     @Override
