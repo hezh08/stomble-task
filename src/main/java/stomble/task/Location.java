@@ -1,9 +1,5 @@
 package stomble.task;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,8 +14,6 @@ public class Location {
     private String city;
     private String planet;
     private int spaceportCapacity;
-
-    //private List<Long> visitors;
     private int currentCapacity;
 
     Location() {}
@@ -29,7 +23,6 @@ public class Location {
         this.planet = planet;
         this.spaceportCapacity = spaceportCapacity;
         this.currentCapacity = 0;
-        //this.visitors = new ArrayList<>();
     }
 
     public Long getIdentifier() {
@@ -47,22 +40,7 @@ public class Location {
     public int getSpaceportCapacity() {
         return spaceportCapacity;
     }
-
-    /* public boolean addVisitor(Long spaceship_id) {
-        if (visitors.size() + 1 > spaceportCapacity) return false;
-
-        return visitors.add(spaceship_id);
-    }
-
-    public void removeVisitor(Long spaceship_id) {
-        Iterator<Long> itr = visitors.iterator();
-        while (itr.hasNext()) {
-            Long ss = itr.next();
-            if (ss.equals(spaceship_id)) {
-                itr.remove();
-            }
-        }
-    } */
+    
     public boolean hasExtraCapacity() {
         return (currentCapacity + 1 <= spaceportCapacity);
     }
