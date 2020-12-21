@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class LoadDatabase {
-    private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+public class LoadTestDatabase {
+    private static final Logger log = LoggerFactory.getLogger(LoadTestDatabase.class);
 
     Location l1 = new Location("Sydney", "Earth", 3);
     Location l2 = new Location("Elon", "Mars", 1);

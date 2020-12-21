@@ -12,19 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class MainController {
+public class SpaceshipController {
 
     private final SpaceshipRepository spaceships;
     private final LocationRepository locations;
 
 
-    MainController(SpaceshipRepository spaceships, LocationRepository locations) {
+    SpaceshipController(SpaceshipRepository spaceships, LocationRepository locations) {
         this.spaceships = spaceships;
         this.locations = locations;
     }    
-
-    
-    // Spaceship Controllers
 
 
     @GetMapping("/spaceships")
@@ -91,7 +88,7 @@ public class MainController {
         if (dest == null) throw new CustomException("location", city, planet);
 
         if (dest.hasExtraCapacity()) {
-            Location prev = getLocationByIdentifier(ss.getLocationIdentifier());
+            Location prev = getLocationByID(ss.getLocationIdentifier());
 
             prev.decreaseCurrentCapacity();
             dest.increaseCurrentCapacity();
@@ -103,46 +100,22 @@ public class MainController {
         return spaceships.save(ss);
     } 
 
-    @DeleteMapping("/spaceships/delete")
+    @DeleteMapping("/spaceships/remove")
     public void removeSpaceship(@RequestParam(value = "id") Long id) {
-        spaceships.deleteById(id);
-    }
-
-
-    // Location Controllers
-
-
-    @GetMapping("/locations")
-    public List<Location> getAllLocations() {
-        return locations.findAll();
-    }
-
-
-    @GetMapping("/locations/{id}")
-    public Location getLocationByIdentifier(@PathVariable Long id) {
-        return locations.findById(id)
-        .orElseThrow(() -> new CustomException("location", id));
-    }
-
-
-    @PostMapping("/locations/add")
-    public Location addLocation(
-            @RequestParam(value = "city") String city, 
-            @RequestParam(value = "planet") String planet,
-            @RequestParam(value = "spaceportCapacity") int spaceportCapacity
-                    ) {
-        if (spaceportCapacity < 0) return null;
-    	return locations.save(new Location(city, planet, spaceportCapacity));
-    }
-
-
-    @DeleteMapping("/locations/remove")
-    public void removeLocation(@RequestParam(value = "id") Long id) {
-        locations.deleteById(id);
+        try {
+            spaceships.deleteById(id);
+        } catch (Exception e) {
+            throw new CustomException(e.getMessage());
+        }
     }
 
 
     // Helper function
+
+    private Location getLocationByID(Long id) {
+        return locations.findById(id)
+        .orElseThrow(() -> new CustomException("location", id));
+    }
     
     private Location getLocationByCityAndPlanet(String city, String planet) {
         Location loc = null;
