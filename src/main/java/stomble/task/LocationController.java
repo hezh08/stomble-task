@@ -47,7 +47,7 @@ public class LocationController {
         try {
             locations.deleteById(id);
         } catch (Exception e) {
-            throw new CustomException(e.getMessage());
+            throw new CustomException("Cannot delete location while spaceship is occupying" + e.getMessage());
         }
     }
 }
