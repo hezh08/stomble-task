@@ -1,20 +1,31 @@
+package stomble.task;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "spaceships")
 public class Spaceship {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
     private String name;
     private String model;
     private Location location;
     private String status;
 
-    public Spaceship(int id, String name, String model, Location location, String status) {
-        this.id = id;
+    public Spaceship(String name, String model, Location location, String status) {
         this.name = name;
         this.model = model;
         this.location = location;
         this.status = status;
     }
 
-    public int getIdentifier() {
+    public Long getIdentifier() {
         return id;
     }
 
@@ -34,7 +45,7 @@ public class Spaceship {
         this.status = newStatus;
     }
 
-    public int getLocationIdentifier() {
+    public Long getLocationIdentifier() {
         return location.getIdentifier();
     }
 
@@ -46,7 +57,9 @@ public class Spaceship {
     
     @Override
     public String toString() {
-        return "Id: " + id + " Name: " + name + " Model: " + model + " Location: " + location + " Status: " + status;
+        return String.format(
+            "Customer[id=%d, name='%s', model='%s', location='%s', status='%s']",
+            id, name, model, location, status);
     }
 
     @Override

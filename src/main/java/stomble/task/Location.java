@@ -1,24 +1,41 @@
+package stomble.task;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="locations")
 public class Location {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
     private String city;
     private String planet;
     private int spaceportCapacity;
-    private List<Spaceship> visitors;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "spaceships_id")
+    private List<Long> visitors;
     
-    public Location(int id, String city, String planet, int spaceportCapacity) {
-        this.id = id;
+    public Location(String city, String planet, int spaceportCapacity) {
         this.city = city;
         this.planet = planet;
         this.spaceportCapacity = spaceportCapacity;
         this.visitors = new ArrayList<>();
     }
 
-    public int getIdentifier() {
+    public Long getIdentifier() {
         return id;
     }
 
@@ -34,17 +51,17 @@ public class Location {
         return spaceportCapacity;
     }
 
-    public boolean addVisitor(Spaceship spaceship) {
+    public boolean addVisitor(Long spaceship_id) {
         if (visitors.size() + 1 > spaceportCapacity) return false;
 
-        return visitors.add(spaceship);
+        return visitors.add(spaceship_id);
     }
 
-    public void removeVisitor(Spaceship spaceship) {
-        Iterator<Spaceship> itr = visitors.iterator();
+    public void removeVisitor(Long spaceship_id) {
+        Iterator<Long> itr = visitors.iterator();
         while (itr.hasNext()) {
-            Spaceship ss = itr.next();
-            if (ss.equals(spaceship)) {
+            Long ss = itr.next();
+            if (ss.equals(spaceship_id)) {
                 itr.remove();
             }
         }
@@ -54,7 +71,9 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Id: " + id + " City: " + city + " Planet: " + planet + " Spaceport Capacity: " + spaceportCapacity;
+        return String.format(
+        "Location[id=%d, city='%s', planet='%s', spaceportCapacity=%d]",
+        id, city, planet, spaceportCapacity);
     }
 
     @Override
