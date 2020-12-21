@@ -63,6 +63,9 @@ public class Location {
             }
         }
     } */
+    public boolean hasExtraCapacity() {
+        return (currentCapacity + 1 <= spaceportCapacity);
+    }
 
     public void increaseCurrentCapacity() {
         currentCapacity++;
@@ -76,8 +79,8 @@ public class Location {
     @Override
     public String toString() {
         return String.format(
-        "Location[id=%d, city='%s', planet='%s', spaceportCapacity=%d]",
-        id, city, planet, spaceportCapacity);
+        "Location[id=%d, city='%s', planet='%s', spaceportCapacity=%d, currentCapacity=%d]",
+        id, city, planet, spaceportCapacity, currentCapacity);
     }
 
     @Override

@@ -10,22 +10,20 @@ import org.springframework.context.annotation.Configuration;
 public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
-    Location l1 = new Location("Australia", "Earth", 3);
+    Location l1 = new Location("Sydney", "Earth", 3);
     Location l2 = new Location("Elon", "Mars", 2);
 
     @Bean
-    CommandLineRunner initLocationDatabase(LocationRepository locations) {
+    CommandLineRunner initDatabase(LocationRepository locations, SpaceshipRepository spaceships) {
         return args -> {
         log.info("Preloading " + locations.save(l1));
         log.info("Preloading " + locations.save(l2));
-        };
-    }
-    
-    @Bean
-    CommandLineRunner initSpaceshipDatabase(SpaceshipRepository spaceships) {
-        return args -> {
         log.info("Preloading " + spaceships.save(new Spaceship("Avalon", "SpaceX", l1, "decommissioned")));
         log.info("Preloading " + spaceships.save(new Spaceship("Explorer", "SpaceX", l2, "decommissioned")));
+        l1.increaseCurrentCapacity();
+        l2.increaseCurrentCapacity();
+        log.info("Updating " + locations.save(l1));
+        log.info("Updating " + locations.save(l2));
         };
-    }
+    } 
 }
