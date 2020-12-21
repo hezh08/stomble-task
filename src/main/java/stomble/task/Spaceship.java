@@ -60,8 +60,8 @@ public class Spaceship {
     @Override
     public String toString() {
         return String.format(
-            "Customer[id=%d, name='%s', model='%s', location='%s', status='%s']",
-            id, name, model, location, status);
+            "Spaceship[id=%d, name='%s', model='%s', location='%s', status='%s']",
+            id, name, model, location.getCity() + ", " + location.getPlanet(), status);
     }
 
     @Override

@@ -14,18 +14,18 @@ public class LoadDatabase {
     Location l2 = new Location("Elon", "Mars", 2);
 
     @Bean
-    CommandLineRunner initDatabase(LocationRepository locations) {
+    CommandLineRunner initLocationDatabase(LocationRepository locations) {
         return args -> {
         log.info("Preloading " + locations.save(l1));
         log.info("Preloading " + locations.save(l2));
         };
     }
     
-    /* @Bean
-    CommandLineRunner initDatabase(SpaceshipRepository spaceships) {
+    @Bean
+    CommandLineRunner initSpaceshipDatabase(SpaceshipRepository spaceships) {
         return args -> {
         log.info("Preloading " + spaceships.save(new Spaceship("Avalon", "SpaceX", l1, "decommissioned")));
         log.info("Preloading " + spaceships.save(new Spaceship("Explorer", "SpaceX", l2, "decommissioned")));
         };
-    } */
+    }
 }
