@@ -12,7 +12,7 @@ public class CustomException extends RuntimeException {
         super("Could not find " + entity + " " + city + ", " + planet);
     }
 
-    CustomException(String status) {
-        super("Invalid status " + status);
+    CustomException(String msg) {
+        super(msg);
     }
 }

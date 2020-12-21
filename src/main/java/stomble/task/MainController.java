@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping; 
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +23,9 @@ public class MainController {
         this.locations = locations;
     }    
 
+    
+    // Spaceship Controllers
+
 
     @GetMapping("/spaceships")
 	public List<Spaceship> getAllSpaceships() {
@@ -38,7 +40,7 @@ public class MainController {
     }
     
 
-    @PostMapping("/spaceships")
+    @PostMapping("/spaceships/add")
     public Spaceship addSpaceship(
                 @RequestParam(value = "name") String name, 
                 @RequestParam(value = "model") String model, 
@@ -51,17 +53,20 @@ public class MainController {
         if (location == null) throw new CustomException("location", city, planet);
         
         if (! status.equals("decommissioned") && ! status.equals("maintenance") && ! status.equals("operational")) 
-            throw new CustomException(status);
+            throw new CustomException("Invalid input");
 
         Spaceship ss = new Spaceship(name, model, location, status);
         location.increaseCurrentCapacity();    
         return spaceships.save(ss);
     }
 
-    @PutMapping("/spaceships/status/{id}")
-    public Spaceship updateStatus(@RequestParam(value = "status") String status, @PathVariable Long id) {
+    @PutMapping("/spaceships/update-status")
+    public Spaceship updateStatus(
+                @RequestParam(value = "id") Long id,
+                @RequestParam(value = "status") String status
+                    ) {
         if (! status.equals("decommissioned") && ! status.equals("maintenance") && ! status.equals("operational")) 
-            throw new CustomException(status);
+            throw new CustomException("Invalid input");
 
         return spaceships.findById(id)
         .map(ss -> {
@@ -71,15 +76,19 @@ public class MainController {
         .orElseThrow(() -> new CustomException("spaceship", id));
     }
 
-    @PutMapping("/spaceships/travel/{id}")
-    public Spaceship travelToLocation(@RequestParam(value = "city") String newCity, @RequestParam(value = "planet") String newPlanet, @PathVariable Long id) {
+    @PutMapping("/spaceships/travel")
+    public Spaceship travelToLocation(
+                @RequestParam(value = "id") Long id,
+                @RequestParam(value = "city") String city, 
+                @RequestParam(value = "planet") String planet
+                    ) {
         
         Spaceship ss = spaceships.findById(id)
                         .orElseThrow(() -> new CustomException("spaceship", id));
-        if (! ss.getStatus().equals("operational")) throw new CustomException(ss.getStatus());
+        if (! ss.getStatus().equals("operational")) throw new CustomException("Status must be operational");
 
-        Location dest = getLocationByCityAndPlanet(newCity, newPlanet);
-        if (dest == null) throw new CustomException("location", newCity, newPlanet);
+        Location dest = getLocationByCityAndPlanet(city, planet);
+        if (dest == null) throw new CustomException("location", city, planet);
 
         if (dest.hasExtraCapacity()) {
             Location prev = getLocationByIdentifier(ss.getLocationIdentifier());
@@ -88,14 +97,19 @@ public class MainController {
             dest.increaseCurrentCapacity();
 
             ss.setLocation(dest);
+        } else {
+            throw new CustomException("Capacity is full");
         }
         return spaceships.save(ss);
     } 
 
-    @DeleteMapping("/spaceships/{id}")
-    public void removeSpaceship(@PathVariable Long id) {
+    @DeleteMapping("/spaceships/delete")
+    public void removeSpaceship(@RequestParam(value = "id") Long id) {
         spaceships.deleteById(id);
     }
+
+
+    // Location Controllers
 
 
     @GetMapping("/locations")
@@ -111,26 +125,33 @@ public class MainController {
     }
 
 
-    @PostMapping("/locations")
-    public Location newLocation(@RequestBody Location newLocation) {
-    	return locations.save(newLocation);
+    @PostMapping("/locations/add")
+    public Location addLocation(
+            @RequestParam(value = "city") String city, 
+            @RequestParam(value = "planet") String planet,
+            @RequestParam(value = "spaceportCapacity") int spaceportCapacity
+                    ) {
+        if (spaceportCapacity < 0) return null;
+    	return locations.save(new Location(city, planet, spaceportCapacity));
     }
 
 
-    @DeleteMapping("/locations/{id}")
-    public void removeLocation(@PathVariable Long id) {
+    @DeleteMapping("/locations/remove")
+    public void removeLocation(@RequestParam(value = "id") Long id) {
         locations.deleteById(id);
     }
 
+
+    // Helper function
     
     private Location getLocationByCityAndPlanet(String city, String planet) {
         Location loc = null;
 
         Iterator<Location> itr = locations.findAll().iterator();
         while (itr.hasNext()) {
-            loc = itr.next();
-            if (loc.getCity().equals(city) && loc.getPlanet().equals(planet)) {
-                break;
+            Location l = itr.next();
+            if (l.getCity().equals(city) && l.getPlanet().equals(planet)) {
+                loc = l;
             }
         }
         return loc;
