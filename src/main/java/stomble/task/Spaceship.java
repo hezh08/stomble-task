@@ -4,10 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.ManyToOne;
 
 @Entity
-@Table(name = "spaceships")
 public class Spaceship {
 
     @Id
@@ -15,10 +14,13 @@ public class Spaceship {
     private Long id;
     private String name;
     private String model;
+    @ManyToOne(targetEntity = Location.class)
     private Location location;
     private String status;
 
-    public Spaceship(String name, String model, Location location, String status) {
+    Spaceship() {}
+
+    Spaceship(String name, String model, Location location, String status) {
         this.name = name;
         this.model = model;
         this.location = location;

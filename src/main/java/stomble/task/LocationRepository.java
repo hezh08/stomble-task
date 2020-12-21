@@ -1,7 +1,7 @@
 package stomble.task;
 
-import org.springframework.data.jpa.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-interface LocationRepository extends CrudRepository<Location, Long> {
+interface LocationRepository extends JpaRepository<Location, Long> {
 
 }

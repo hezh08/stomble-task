@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LogisticsSystem {
+public class MainController {
 
     private final SpaceshipRepository spaceships;
     private final LocationRepository locations;
 
-    LogisticsSystem(SpaceshipRepository spaceships, LocationRepository locations) {
+    MainController(SpaceshipRepository spaceships, LocationRepository locations) {
         this.spaceships = spaceships;
         this.locations = locations;
     }    

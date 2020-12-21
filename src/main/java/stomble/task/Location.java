@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name="locations")
 public class Location {
 
     @Id
@@ -24,15 +19,17 @@ public class Location {
     private String planet;
     private int spaceportCapacity;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "spaceships_id")
-    private List<Long> visitors;
+    //private List<Long> visitors;
+    private int currentCapacity;
+
+    Location() {}
     
-    public Location(String city, String planet, int spaceportCapacity) {
+    Location(String city, String planet, int spaceportCapacity) {
         this.city = city;
         this.planet = planet;
         this.spaceportCapacity = spaceportCapacity;
-        this.visitors = new ArrayList<>();
+        this.currentCapacity = 0;
+        //this.visitors = new ArrayList<>();
     }
 
     public Long getIdentifier() {
@@ -51,7 +48,7 @@ public class Location {
         return spaceportCapacity;
     }
 
-    public boolean addVisitor(Long spaceship_id) {
+    /* public boolean addVisitor(Long spaceship_id) {
         if (visitors.size() + 1 > spaceportCapacity) return false;
 
         return visitors.add(spaceship_id);
@@ -65,8 +62,15 @@ public class Location {
                 itr.remove();
             }
         }
+    } */
+
+    public void increaseCurrentCapacity() {
+        currentCapacity++;
     }
 
+    public void decreaseCurrentCapacity() {
+        currentCapacity--;
+    }
 
 
     @Override

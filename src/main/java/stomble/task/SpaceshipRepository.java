@@ -1,7 +1,7 @@
 package stomble.task;
 
-import org.springframework.data.jpa.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-interface SpaceshipRepository extends CrudRepository<Spaceship, Long> {
+interface SpaceshipRepository extends JpaRepository<Spaceship, Long> {
     
 }
