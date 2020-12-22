@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+// Maps HTTP requests to backend. API Interface
+
 @RestController
 public class SpaceshipController {
 
@@ -47,10 +49,11 @@ public class SpaceshipController {
                     ) {
 
         Location location = getLocationByCityAndPlanet(city, planet);
-        if (location == null) throw new CustomException("location", city, planet);
+        if (location == null) 
+            throw new CustomException("location", city, planet);
         
         if (! status.equals("decommissioned") && ! status.equals("maintenance") && ! status.equals("operational")) 
-            throw new CustomException("Invalid input");
+            throw new CustomException("Invalid input for status");
 
         Spaceship ss = new Spaceship(name, model, location, status);
         location.increaseCurrentCapacity();    
@@ -63,7 +66,7 @@ public class SpaceshipController {
                 @RequestParam(value = "status") String status
                     ) {
         if (! status.equals("decommissioned") && ! status.equals("maintenance") && ! status.equals("operational")) 
-            throw new CustomException("Invalid input");
+            throw new CustomException("Invalid input for status");
 
         return spaceships.findById(id)
         .map(ss -> {
@@ -81,11 +84,13 @@ public class SpaceshipController {
                     ) {
         
         Spaceship ss = spaceships.findById(id)
-                        .orElseThrow(() -> new CustomException("spaceship", id));
-        if (! ss.getStatus().equals("operational")) throw new CustomException("Status must be operational");
+                                 .orElseThrow(() -> new CustomException("spaceship", id));
+        if (! ss.getStatus().equals("operational")) 
+            throw new CustomException("Status must be operational");
 
         Location dest = getLocationByCityAndPlanet(city, planet);
-        if (dest == null) throw new CustomException("location", city, planet);
+        if (dest == null) 
+            throw new CustomException("location", city, planet);
 
         if (dest.hasExtraCapacity()) {
             Location prev = getLocationByID(ss.getLocationIdentifier());
@@ -95,7 +100,7 @@ public class SpaceshipController {
 
             ss.setLocation(dest);
         } else {
-            throw new CustomException("Capacity is full");
+            throw new CustomException("Capacity is full. Current capacity: " + dest.getCurrentCapacity() + " Spaceport capacity: " + dest.getSpaceportCapacity());
         }
         return spaceships.save(ss);
     } 

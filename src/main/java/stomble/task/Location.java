@@ -40,6 +40,10 @@ public class Location {
     public int getSpaceportCapacity() {
         return spaceportCapacity;
     }
+
+    public int getCurrentCapacity() {
+        return currentCapacity;
+    }
     
     public boolean hasExtraCapacity() {
         return (currentCapacity + 1 <= spaceportCapacity);

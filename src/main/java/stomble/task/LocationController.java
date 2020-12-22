@@ -27,7 +27,7 @@ public class LocationController {
     @GetMapping("/locations/{id}")
     public Location getLocationByIdentifier(@PathVariable Long id) {
         return locations.findById(id)
-        .orElseThrow(() -> new CustomException("location", id));
+                        .orElseThrow(() -> new CustomException("location", id));
     }
 
 
@@ -37,7 +37,8 @@ public class LocationController {
             @RequestParam(value = "planet") String planet,
             @RequestParam(value = "spaceportCapacity") int spaceportCapacity
                     ) {
-        if (spaceportCapacity < 0) return null;
+        if (spaceportCapacity < 0) 
+            return null;
     	return locations.save(new Location(city, planet, spaceportCapacity));
     }
 
