@@ -1,6 +1,7 @@
 # API Documentations
 
 ## GET http://localhost:8080/spaceships
+Gets details of all spaceships.
 #### Example request
 `GET http://localhost:8080/spaceships`
 #### Example response
@@ -21,6 +22,7 @@
     }
 ]`
 ## GET http://localhost:8080/spaceships/{id}
+Gets details of one spaceship. \
 Include id of spaceship at end of URL.
 #### Example request
 `GET http://localhost:8080/spaceships/4`
@@ -35,6 +37,7 @@ Include id of spaceship at end of URL.
     } 
 ]`
 ## POST http://localhost:8080/spaceships/add
+Add spaceships. \
 Include parameters: name, model, city, planet, status
 #### Example request
 `POST http://localhost:8080/spaceships/add?name=Starship&model=SpaceX&city=Elon&planet=Mars&status=operational`
@@ -47,6 +50,7 @@ Include parameters: name, model, city, planet, status
     "locationIdentifier": 2
 }`
 ## PUT http://localhost:8080/spaceships/update-status
+Updates status of one spaceship. \
 Include parameters: id, status
 #### Example request
 `PUT http://localhost:8080/spaceships/update-status?id=7&status=maintenance`
@@ -59,6 +63,7 @@ Include parameters: id, status
     "locationIdentifier": 2
 }`
 ## PUT http://localhost:8080/spaceships/travel
+Spaceship travels to a destination. Must be an existing location. \
 Include parameters: id, city, planet
 #### Example request
 `PUT http://localhost:8080/spaceships/travel?id=4&city=Atlanta&planet=Neptune`
@@ -71,12 +76,14 @@ Include parameters: id, city, planet
     "locationIdentifier": 3
 }`
 ## DELETE http://localhost:8080/spaceships/remove
+Removes spaceship. \
 Include parameters: id
 #### Example request
 `DELETE http://localhost:8080/spaceships/remove?id=4`
 #### Example response
 `(nothing)`
 ## GET http://localhost:8080/locations
+Gets details of all locations.
 #### Example request
 `GET http://localhost:8080/locations`
 #### Example response
@@ -95,6 +102,7 @@ Include parameters: id
     }
 ]`
 ## GET http://localhost:8080/locations/{id}
+Gets detail of one location. \
 Include id of spaceship at end of URL.
 #### Example request
 `GET http://localhost:8080/locations/1`
@@ -106,6 +114,7 @@ Include id of spaceship at end of URL.
     "identifier": 1
 }`
 ## POST http://localhost:8080/locations/add
+Add a location. \
 Include parameters: city, planet, spaceportCapacity
 #### Example request
 `POST http://localhost:8080/locations/add?city=Red&planet=Saturn&spaceportCapacity=5`
@@ -117,6 +126,7 @@ Include parameters: city, planet, spaceportCapacity
     "identifier": 8
 }`
 ## DELETE http://localhost:8080/locations/remove
+Remove location. \
 Include parameters: id
 #### Example request
 `DELETE http://localhost:8080/locations/remove?id=8`
