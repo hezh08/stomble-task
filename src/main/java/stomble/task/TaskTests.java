@@ -12,6 +12,8 @@ import org.springframework.core.annotation.Order;
 // Is automatically run at start of the program
 // Results are displayed to stdout for inspection.
 //
+// APIs were also tested using Postman.
+//
 
 @Configuration
 public class TaskTests {
