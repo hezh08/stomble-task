@@ -1,6 +1,8 @@
 package stomble.task;
 
+//
 // Generic Exception Handling Class
+//
 
 public class CustomException extends RuntimeException {
 

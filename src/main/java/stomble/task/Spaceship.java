@@ -6,6 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+//
+// Spaceship class
+//
+
 @Entity
 public class Spaceship {
 

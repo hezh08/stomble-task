@@ -7,7 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
+//
 // Testing of essential (not all) test cases
+// Is automatically run at start of the program
+// Results are displayed to stdout for inspection.
+//
 
 @Configuration
 public class TaskTests {

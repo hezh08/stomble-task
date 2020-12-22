@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+//
 // 'Advice' given to controller to display exception error message with HTTP response
+//
 
 @ControllerAdvice
 public class ExceptionHandlerAdvice {

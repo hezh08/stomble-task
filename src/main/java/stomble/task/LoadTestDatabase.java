@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 // Loads a test database with 3 locations and 3 spaceships
+// Is automatically run at start of the program
 
 @Configuration
 public class LoadTestDatabase {
