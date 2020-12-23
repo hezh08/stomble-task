@@ -6,7 +6,7 @@ The program can be run by: \
 or alternatively: \
 `java -jar task-0.0.1-SNAPSHOT.jar`
 
-Thanks
+
 # API Documentations
 
 ## GET http://localhost:8080/spaceships
