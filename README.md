@@ -4,7 +4,7 @@ This program was made using Java. The REST framework is a Spring Boot applicatio
 The program can be run by: \
  `./mvnw spring-boot:run` \
 or alternatively: \
-`java -jar target/task-0.0.1-SNAPSHOT.jar`
+`java -jar task-0.0.1-SNAPSHOT.jar`
 
 Thanks
 # API Documentations
